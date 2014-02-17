@@ -3,7 +3,7 @@ var images_search_client = require('google-images');
 var request = require('request');
 var fs, configurationFile;
  
-configurationFile = 'configuration.json.sample';
+configurationFile = 'configuration.json';
 fs = require('fs');
  
 var configuration = JSON.parse(
@@ -45,9 +45,8 @@ bot.addListener('message', function(from, to, message) {
             url: 'https://www.googleapis.com/urlshortener/v1/url?key=' + GAPI_KEY, 
             json:payload
           }, function(error, response, body) {
-            bot.say(to, "Here!  Take this " + animal + "!");
+            bot.say(to, "Here " + from + "!  Take this " + animal + "! " + body.id);
             console.log(JSON.stringify(body));
-            bot.say(to, body.id);
           });
         }
       });
