@@ -31,12 +31,14 @@ bot.addListener('message', function(from, to, message) {
     if (message === 'cutebot help') {
       bot.say(to, 'I am cutebot. Say my name and I will give you cute.');
     } else {
-      var animals = ['dog', 'cat', 'puppy', 'kitten', 'otter', 'owl', 'pig', 'piglet', 'benedict cumberbatch', 'seal', 'duckling', 'chick', 'corgi'];
+      var animals = configuration.supportedAnimals;
       var index = getRandomInt(0, animals.length - 1);
-      var page = getRandomInt(1, 10);
+      var page = getRandomInt(1, configuration.numResultPages);
+      // There are 3 results per page from the (deprecated) Google Image Search API.
+      var hitNum = getRandomInt(0, 2);
       var animal = animals[index];
 
-      var cacheKey = animal + page;
+      var cacheKey = animal + "-" + page + "-" + hitNum;
       var cachedValue;
 
       redisClient.get(cacheKey, function(err, reply) {
@@ -50,7 +52,7 @@ bot.addListener('message', function(from, to, message) {
             'cute ' + animal, {
               page: page, 
               callback: function(status, images) {
-                var payload = { longUrl: images[0].url };
+                var payload = { longUrl: images[hitNum].url };
                 request.post({
                   url: 'https://www.googleapis.com/urlshortener/v1/url?key=' + GAPI_KEY, 
                   json:payload
