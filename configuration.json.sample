@@ -1,0 +1,6 @@
+{
+  "googleAPIKey": "",
+  "ircHost": "irc.foonetic.net",
+  "ircPort": 6667,
+  "ircChannels": ["#asdfasdfasdf"]
+}
