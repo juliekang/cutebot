@@ -3,6 +3,8 @@ var images_search_client = require('google-images');
 var request = require('request');
 var fs, configurationFile;
  
+var CACHE = {};
+
 configurationFile = 'configuration.json';
 fs = require('fs');
  
@@ -32,24 +34,28 @@ bot.addListener('message', function(from, to, message) {
       bot.say(to, 'I am cutebot. Say my name and I will give you cute.');
     } else {
       var animals = ['dog', 'cat', 'puppy', 'kitten', 'otter', 'owl', 'pig', 'piglet', 'benedict cumberbatch', 'seal', 'duckling', 'chick', 'corgi'];
-      animal = animals[getRandomInt(0, animals.length - 1)];
-      images_search_client.search(
-        'cute ' + animal, {
-          page: getRandomInt(1, 10), 
-          callback: function(status, images) {
-            url = images[0].url;
-            //console.log(url);
-
-          var payload = { longUrl: url };
-          request.post({
-            url: 'https://www.googleapis.com/urlshortener/v1/url?key=' + GAPI_KEY, 
-            json:payload
-          }, function(error, response, body) {
-            bot.say(to, "Here " + from + "!  Take this " + animal + "! " + body.id);
-            console.log(JSON.stringify(body));
-          });
-        }
-      });
+      index = getRandomInt(0, animals.length - 1);
+      page = getRandomInt(1, 10);
+      animal = animals[index];
+      if (!CACHE[animal + page]) {
+        images_search_client.search(
+          'cute ' + animal, {
+            page: page, 
+            callback: function(status, images) {
+              var payload = { longUrl: images[0].url };
+              request.post({
+                url: 'https://www.googleapis.com/urlshortener/v1/url?key=' + GAPI_KEY, 
+                json:payload
+              }, function(error, response, body) {
+                CACHE[animal + page] = body.id;
+                bot.say(to, "Hey " + from + "! Take this " + animal + "! " + body.id);
+              });
+            }
+          }
+        );
+      } else {
+        bot.say(to, "Hey " + from + "! Take this " + animal + "! " + CACHE[animal + page]);
+      }
     }
   }
 });
