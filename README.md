@@ -4,6 +4,8 @@ Written in node.js, with love
 
 To run: 
 
-Fill in the BLANKs in lines 6, 9, 10 with your Google developer API key, IRC server, and channel(s) of choice.  Then <code>node server.js</code>, and you should be good to go!
+Rename `configuration.json.sample` to `configuration.json`, then flesh out with your Google developer API key, IRC server, and channel(s) of choice.  Then `node server.js`, and you should be good to go!
+
+Enjoy the Cute!
 
 Feedback welcome: juliekang@alumni.stanford.edu
