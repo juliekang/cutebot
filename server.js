@@ -3,7 +3,7 @@
 var config = require("./config"),
     util = require("./util"),
     irc = require("irc"),
-    CuteMessageHandler = require("./messagehandler");
+    CuteMessageHandler = require("./cutemessagehandler");
 
 console.log("Using config: " + config);
 
