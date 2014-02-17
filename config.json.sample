@@ -1,0 +1,9 @@
+{
+  "googleAPIKey": "",
+  "ircHost": "irc.foonetic.net",
+  "ircPort": 6667,
+  "ircChannels": ["#asdfasdfasdf"]
+  "animals": ["dog", "cat", "puppy", "kitten", "otter", "owl", "pig", "piglet", "benedict cumberbatch", "seal", "duckling", "chick", "corgi"],
+  "numResultPages": 5,
+  "cacheExpiry": 86400
+}
