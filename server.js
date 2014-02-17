@@ -1,5 +1,6 @@
 "use strict";
 
+var util = require('./util');
 var irc = require('irc');
 var images_search_client = require('google-images');
 var request = require('request');
@@ -20,9 +21,7 @@ var bot = new irc.Client(configuration.ircHost, 'cutebot', {
     debug: true,
 });
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
+
 
 bot.addListener('message', function(from, to, message) {
   message = message.trim().toLowerCase();
@@ -32,10 +31,10 @@ bot.addListener('message', function(from, to, message) {
       bot.say(to, 'I am cutebot. Say my name and I will give you cute.');
     } else {
       var animals = configuration.supportedAnimals;
-      var index = getRandomInt(0, animals.length - 1);
-      var page = getRandomInt(1, configuration.numResultPages);
+      var index = util.getRandomInt(0, animals.length - 1);
+      var page = util.getRandomInt(1, configuration.numResultPages);
       // There are 3 results per page from the (deprecated) Google Image Search API.
-      var hitNum = getRandomInt(0, 2);
+      var hitNum = util.getRandomInt(0, 2);
       var animal = animals[index];
 
       var cacheKey = animal + "-" + page + "-" + hitNum;
