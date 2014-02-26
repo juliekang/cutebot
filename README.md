@@ -1,6 +1,6 @@
 CuteBot, a cuteness-friendly IRC bot
 ====================================
-Written in node.js, with love
+Written in node.js using Redis, with love
 
 To run: 
 
